@@ -1,4 +1,5 @@
 from ..search.grid_search import GridSearch
+from ..search.bandit_search import BanditSearch
 
 class Tuner:
     ''' Tuner
@@ -21,8 +22,9 @@ class Tuner:
         self._params = params
         if search == 'grid_search':
             self._search = GridSearch(file_name, need_compile, params)
+        if search == 'bandit_search':
+            self._search = BanditSearch(file_name, need_compile, params)
         self._best_params = {}
-        
         
     def get_best_params(self):
         self._search.run()
