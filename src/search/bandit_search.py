@@ -1,12 +1,12 @@
 import itertools
 import numpy as np
 import os
-import sys
+from .search_alg import Search
 import time
 
 ITERATION = 50
 
-class BanditSearch():
+class BanditSearch(Search):
     ''' Bandit search algorithm
     
     @attribute _file_name: The name of the targeted file
@@ -28,11 +28,7 @@ class BanditSearch():
         @param best_params: The parameters performing the best
         @param best_result: The best performance
         '''
-        self._file_name = file_name
-        self._need_compile = need_compile
-        self._params = params
-        self._best_params = {}
-        self._best_result = sys.maxsize
+        super().__init__(file_name, need_compile, params)
         
         self._option_cnt = 0
         self._combinations = []
