@@ -1,6 +1,5 @@
 import itertools
 import numpy as np
-import os
 from .search_alg import Search
 import time
 
@@ -9,24 +8,24 @@ ITERATION = 50
 class BanditSearch(Search):
     ''' Bandit search algorithm
     
-    @attribute _file_name: The name of the targeted file
-    @attribute _need_compile: Whether the file need to be compiled
-    @attribute _params: All possible parameters
-    @attribute _best_params: The parameters performing the best
-    @attribute _best_result: The best performance
-    @attribute _combinations: The parameters combinations
-    @attribute _counts: Sampled times of each configuration
-    @attribute _values: The result of each configuration
+    :attribute _file_name: The name of the targeted file
+    :attribute _need_compile: Whether the file need to be compiled
+    :attribute _params: All possible parameters
+    :attribute _best_params: The parameters performing the best
+    :attribute _best_result: The best performance
+    :attribute _combinations: The parameters combinations
+    :attribute _counts: Sampled times of each configuration
+    :attribute _values: The result of each configuration
     '''
     
     def __init__(self, file_name: str, need_compile: bool, params: dict) -> None:
         ''' Initialize the Grid Search
         
-        @param file_name: The name of the targeted file
-        @param need_compile: Whether the file need to be compiled
-        @param params: All possible parameters (eg: {block_size: (2, 4, 8), gcc_flag: (O1, O2, O3)})
-        @param best_params: The parameters performing the best
-        @param best_result: The best performance
+        :param file_name: The name of the targeted file
+        :param need_compile: Whether the file need to be compiled
+        :param params: All possible parameters (eg: {block_size: (2, 4, 8), gcc_flag: (O1, O2, O3)})
+        :param best_params: The parameters performing the best
+        :param best_result: The best performance
         '''
         super().__init__(file_name, need_compile, params)
         
@@ -43,6 +42,9 @@ class BanditSearch(Search):
         self._epsilon = 0.1
             
     def run(self):
+        '''
+        Execute the bandit search algorithm to get the best parameter configuration
+        '''
         for _ in range(ITERATION):
             rand = np.random.rand(0, 1)
             if rand < self._epsilon:
@@ -64,21 +66,8 @@ class BanditSearch(Search):
         self._best_params = self._combinations[np.argmax(self._values)]
     
     def _single_execution(self, current_params: dict):
+        '''
+        Execute the program with one specific parameter configuration
+        '''
         target_file_name = self._file_name
-        if self._need_compile:
-            gcc_cmd = 'gcc -'
-            gcc_cmd += current_params['o']
-            gcc_cmd += ' '
-            gcc_cmd += self._file_name
-            gcc_cmd += ' -o '
-            target_file_name = self._file_name[: -2]
-            gcc_cmd += target_file_name
-            os.system(gcc_cmd)
-            
-        gcc_cmd = target_file_name
-        gcc_cmd += ' '
-        gcc_cmd += current_params['s']
-        os.system(gcc_cmd)
-        
-    def get_best_params(self):
-        return self._best_params
+        super().get_and_execute_command(target_file_name, current_params)
