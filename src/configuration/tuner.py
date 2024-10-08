@@ -10,7 +10,7 @@ class Tuner:
     :attribute _search: The search algorithm
     :attribute _best_params: The best parameters
     '''
-    def __init__(self, file_name: str, need_compile: bool, params: dict , search = 'grid_search') -> None:
+    def __init__(self, file_name: str, need_compile: bool, params: dict , search = 'grid') -> None:
         ''' Initialize the tunner
         
         :param file_name: The name of the targeted file
@@ -20,9 +20,9 @@ class Tuner:
         self._file_name = file_name
         self._need_compile = need_compile
         self._params = params
-        if search == 'grid_search':
+        if search == 'grid':
             self._search = GridSearch(file_name, need_compile, params)
-        if search == 'bandit_search':
+        if search == 'bandit':
             self._search = BanditSearch(file_name, need_compile, params)
         self._best_params = {}
         

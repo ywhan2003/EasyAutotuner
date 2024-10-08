@@ -1,4 +1,5 @@
 import itertools
+import os
 from .search_alg import Search
 import time
 
@@ -33,7 +34,10 @@ class GridSearch(Search):
             if duration < self._best_result:
                 self._best_params = current_params
                 self._best_result = duration
+                
+        if self._need_compile:
+            self._clear_temporary_file()
     
     def _single_execution(self, current_params: dict):
         target_file_name = self._file_name
-        super().get_and_execute_command(target_file_name, current_params)
+        super()._get_and_execute_command(target_file_name, current_params)

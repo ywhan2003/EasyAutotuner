@@ -64,10 +64,13 @@ class BanditSearch(Search):
             self._values[idx] = value + (- duration - value) / n
         
         self._best_params = self._combinations[np.argmax(self._values)]
+        
+        if self._need_compile:
+            self._clear_temporary_file()
     
     def _single_execution(self, current_params: dict):
         '''
         Execute the program with one specific parameter configuration
         '''
         target_file_name = self._file_name
-        super().get_and_execute_command(target_file_name, current_params)
+        super()._get_and_execute_command(target_file_name, current_params)

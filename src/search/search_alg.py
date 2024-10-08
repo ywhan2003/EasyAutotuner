@@ -48,7 +48,7 @@ class Search(ABC):
         '''
         return self._best_params
     
-    def get_and_execute_command(self, target_file_name:str, current_params: dict):
+    def _get_and_execute_command(self, target_file_name:str, current_params: dict):
         '''
         Construct the command with specific parameters and execute the commands
         
@@ -61,7 +61,8 @@ class Search(ABC):
             gcc_cmd += ' '
             gcc_cmd += self._file_name
             gcc_cmd += ' -o '
-            target_file_name = self._file_name[: -2]
+            index = self._file_name.rfind('.')
+            target_file_name = self._file_name[: index]
             gcc_cmd += target_file_name
             os.system(gcc_cmd)
             
@@ -69,3 +70,10 @@ class Search(ABC):
         gcc_cmd += ' '
         gcc_cmd += current_params['s']
         os.system(gcc_cmd)
+        
+    def _clear_temporary_file(self):
+        assert(self._need_compile)
+        index = self._file_name.rfind('.')
+        delete_file_name = self._file_name[: index]
+        # print(delete_file_name)
+        os.system("rm -rf " + delete_file_name)

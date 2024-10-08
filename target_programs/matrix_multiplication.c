@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <assert.h>
 
-#define n 4096
+#define n 128
 double A[n][n];
 double B[n][n];
 double C[n][n];

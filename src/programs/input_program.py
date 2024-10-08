@@ -11,7 +11,7 @@ class Program:
     :attribute _search: The search algorithm
     :attribute _tuner: The tunner
     '''
-    def __init__(self, file_name: str, need_compile: bool, params: dict, search: str = 'grid_search') -> None:
+    def __init__(self, file_name: str, need_compile: bool, params: dict, search: str = 'grid') -> None:
         ''' Initialize the input programs
         
         :param file_name: The name of the targeted file
