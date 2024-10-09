@@ -17,7 +17,6 @@ class BanditSearch(Search):
     :attribute _counts: Sampled times of each configuration
     :attribute _values: The result of each configuration
     '''
-    
     def __init__(self, file_name: str, need_compile: bool, params: dict) -> None:
         ''' Initialize the Grid Search
         
@@ -31,8 +30,8 @@ class BanditSearch(Search):
         
         self._option_cnt = 0
         self._combinations = []
-        for combination in itertools.product(self._params['o'], self._params['s']):
-            current_params = {'o': combination[0], 's': combination[1]}
+        combinations = self._get_all_combinations(self._params)
+        for current_params in combinations:
             self._combinations.append(current_params)
             self._option_cnt += 1
             

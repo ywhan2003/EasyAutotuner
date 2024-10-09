@@ -1,5 +1,3 @@
-import itertools
-import os
 from .search_alg import Search
 import time
 
@@ -24,8 +22,8 @@ class GridSearch(Search):
         super().__init__(file_name, need_compile, params)
         
     def run(self):
-        for combination in itertools.product(self._params['o'], self._params['s']):
-            current_params = {'o': combination[0], 's': combination[1]}
+        combinations = self._get_all_combinations(self._params)
+        for current_params in combinations:
             start_time = time.time()
             self._single_execution(current_params)
             end_time = time.time()

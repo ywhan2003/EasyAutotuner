@@ -10,5 +10,4 @@ tuner = Tuner(file_name)
 tuner.add_parameter('o', ('O0', 'O1', 'O2', 'O3'))
 tuner.add_parameter('s', ('8', '16', '32', '64', '128'))
 
-# print(tuner.get_paramters())
 print(tuner.get_best_params())

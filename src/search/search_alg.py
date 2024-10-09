@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import itertools
 import os
 import sys
 
@@ -11,7 +12,6 @@ class Search(ABC):
     :attribute _best_params: The parameters performing the best
     :attribute _best_result: The best performance
     '''
-    
     def __init__(self, file_name: str, need_compile: bool, params: dict) -> None:
         ''' Initialize the Grid Search
         
@@ -77,3 +77,19 @@ class Search(ABC):
         delete_file_name = self._file_name[: index]
         # print(delete_file_name)
         os.system("rm -rf " + delete_file_name)
+        
+    def _get_all_combinations(self, dic: dict) -> list:
+        '''
+        Get all combinations of the dict
+        '''
+        keys = dic.keys()
+        values = dic.values()
+        combinations = itertools.product(*values)
+        
+        combinations_with_keys = []
+
+        for combo in combinations:
+            combo_with_keys = dict(zip(keys, combo))
+            combinations_with_keys.append(combo_with_keys)
+            
+        return combinations_with_keys
