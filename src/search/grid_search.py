@@ -12,7 +12,6 @@ class GridSearch(Search):
     :attribute _best_params: The parameters performing the best
     :attribute _best_result: The best performance
     '''
-    
     def __init__(self, file_name: str, need_compile: bool, params: dict) -> None:
         ''' Initialize the Grid Search
         

@@ -11,19 +11,18 @@ class Program:
     :attribute _search: The search algorithm
     :attribute _tuner: The tunner
     '''
-    def __init__(self, file_name: str, need_compile: bool, params: dict, search: str = 'grid') -> None:
+    def __init__(self, file_name: str, params: dict, search: str = 'grid') -> None:
         ''' Initialize the input programs
         
         :param file_name: The name of the targeted file
-        :param need_compile: Whether the file need to be compiled
         :param params: All possible parameters (eg: {block_size: (2, 4, 8), gcc_flag: (O1, O2, O3)})
         '''
         self._file_name = file_name
-        self._need_compile = need_compile
+        self._need_compile = 'o' in params
         self._params = params
         self._best_params = {}
         self._search = search
-        self._tuner = Tuner(self._file_name, self._need_compile, self._params, self._search)
+        self._tuner = Tuner(self._file_name, self._params, self._search)
         
     def run(self):
         '''
