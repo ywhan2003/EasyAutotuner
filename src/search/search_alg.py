@@ -56,6 +56,7 @@ class Search(ABC):
         :param current_params: Current parameter configuration
         '''
         if self._need_compile:
+            assert('o' in current_params)
             gcc_cmd = 'gcc -'
             gcc_cmd += current_params['o']
             gcc_cmd += ' '
@@ -67,8 +68,12 @@ class Search(ABC):
             os.system(gcc_cmd)
             
         gcc_cmd = target_file_name
-        gcc_cmd += ' '
-        gcc_cmd += current_params['s']
+        for key, value in current_params.items():
+            if key == 'o':
+                continue
+            
+            gcc_cmd += ' '
+            gcc_cmd += value
         os.system(gcc_cmd)
         
     def _clear_temporary_file(self):
